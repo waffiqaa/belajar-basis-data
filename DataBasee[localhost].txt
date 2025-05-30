@@ -1,0 +1,119 @@
+Server [localhost]:
+Database [postgres]:
+Port [5432]:
+Username [postgres]:
+Password for user postgres:
+
+psql (17.5)
+WARNING: Console code page (437) differs from Windows code page (1252)
+         8-bit characters might not work correctly. See psql reference
+         page "Notes for Windows users" for details.
+Type "help" for help.
+
+postgres=# create database sisfo
+postgres-# ;
+CREATE DATABASE
+postgres=#
+postgres=#
+postgres=#
+postgres=# \list
+                                                                    List of databases
+       Name        |  Owner   | Encoding | Locale Provider |        Collate         |         Ctype          | Locale | ICU Rules |   Access privileges
+-------------------+----------+----------+-----------------+------------------------+------------------------+--------+-----------+-----------------------
+ mhs_sisfo2024     | postgres | UTF8     | libc            | English_Indonesia.1252 | English_Indonesia.1252 |        |           |
+ mhs_sisfo24       | postgres | UTF8     | libc            | English_Indonesia.1252 | English_Indonesia.1252 |        |         -- Mo  |
+ mhw_sisfo24       | postgres | UTF8     | libc            | English_Indonesia.1252 | English_Indonesia.1252 |        |           | - postgres          | postgres | UTF8     | libc            | English_Indonesia.1252 | English_Indonesia.1252 |        |           | - sisfo             | postgres | UTF8     | libc            | English_Indonesia.1252 | English_Indonesia.1252 |        |           | - sisteminformasi24 | postgres | UTF8     | libc            | English_Indonesia.1252 | English_Indonesia.1252 |        |           | - template0         | postgres | UTF8     | libc            | English_Indonesia.1252 | English_Indonesia.1252 |        |           | =c/postgres          +
+                   |          |          |                 |                        |                        |        |           | postgres=CTc/postgres
+ template1         | postgres | UTF8     | libc            | English_Indonesia.1252 | English_Indonesia.1252 |        |           | =c/postgres          +
+                   |          |          |                 |                        |                        |        |           | postgres=CTc/postgres
+(8 rows)
+
+
+postgres=# \c sisfo
+You are now connected to database "sisfo" as user "postgres".
+sisfo=# create table mahasiswa
+sisfo-# (
+sisfo(# nim char(8) primary key, nama varchar(25), asal_daerah varchar(70)
+sisfo(# )
+sisfo-# ;
+CREATE TABLE
+sisfo=# \d
+           List of relations
+ Schema |   Name    | Type  |  Owner
+--------+-----------+-------+----------
+ public | mahasiswa | table | postgres
+(1 row)
+
+
+sisfo=# \d mahasiswa
+                       Table "public.mahasiswa"
+   Column    |         Type          | Collation | Nullable | Default
+-------------+-----------------------+-----------+----------+---------
+ nim         | character(8)          |           | not null |
+ nama        | character varying(25) |           |          |
+ asal_daerah | character varying(70) |           |          |
+Indexes:
+    "mahasiswa_pkey" PRIMARY KEY, btree (nim)
+
+
+sisfo=# insert into mahasiswa values
+sisfo-# ('D0424310', 'Waffiq Adkhilniy MR', 'Tapalang'),('D0424502', 'Hasanah', 'Majene')
+sisfo-# ;
+INSERT 0 2
+sisfo=# select * from mahasiswa
+sisfo-# ;
+   nim    |        nama         | asal_daerah
+----------+---------------------+-------------
+ D0424310 | Waffiq Adkhilniy MR | Tapalang
+ D0424502 | Hasanah             | Majene
+(2 rows)
+
+
+sisfo=# insert into mahasiswa values
+sisfo-# ('D0424312', 'Serlia', 'Mamuju')
+sisfo-# ;
+INSERT 0 1
+sisfo=# select * from mahasiswa
+sisfo-# ;
+   nim    |        nama         | asal_daerah
+----------+---------------------+-------------
+ D0424310 | Waffiq Adkhilniy MR | Tapalang
+ D0424502 | Hasanah             | Majene
+ D0424312 | Serlia              | Mamuju
+(3 rows)
+
+
+sisfo=# insert into mahasiswa values
+sisfo-# ('D0424511', 'Nur Ulfiah', 'Majene'),('D0424507', 'Muhammad Arif', 'Sendana')
+sisfo-# ;
+INSERT 0 2
+sisfo=# select * from mahasiswa
+sisfo-# ;
+   nim    |        nama         | asal_daerah
+----------+---------------------+-------------
+ D0424310 | Waffiq Adkhilniy MR | Tapalang
+ D0424502 | Hasanah             | Majene
+ D0424312 | Serlia              | Mamuju
+ D0424511 | Nur Ulfiah          | Majene
+ D0424507 | Muhammad Arif       | Sendana
+(5 rows)
+
+
+sisfo=# update mahasiswa
+sisfo-# set asal_daerah='Toraja'
+sisfo-# where nim='D0424312'
+sisfo-# ;
+UPDATE 1
+sisfo=# select * from mahasiswa
+sisfo-# ;
+   nim    |        nama         | asal_daerah
+----------+---------------------+-------------
+ D0424310 | Waffiq Adkhilniy MR | Tapalang
+ D0424502 | Hasanah             | Majene
+ D0424511 | Nur Ulfiah          | Majene
+ D0424507 | Muhammad Arif       | Sendana
+ D0424312 | Serlia              | Toraja
+(5 rows)
+
+
+sisfo=#
